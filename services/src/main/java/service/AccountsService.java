@@ -29,14 +29,15 @@ public class AccountsService implements AccountsServiceInterface {
         if (usersRepository.findUsersById(dto.getUserId()) == null) {
             throw new InvalidEmailException("UserId is required");
         }
-        AccountsModel accountsModel = AccountsModel.builder()
-                .accountType(dto.getAccountType())
-                .balance(dto.getBalance())
-                .currency(dto.getCurrency())
-                .interestRate(dto.getInterestRate())
-                .status(dto.getStatus())
-                .usersModel(usersRepository.findUsersById(dto.getUserId()))
-                .build();
+//        AccountsModel accountsModel = AccountsModel.builder()
+//                .accountType(dto.getAccountType())
+//                .balance(dto.getBalance())
+//                .currency(dto.getCurrency())
+//                .interestRate(dto.getInterestRate())
+//                .status(dto.getStatus())
+//                .usersModel(usersRepository.findUsersById(dto.getUserId()))
+//                .build();
+        AccountsModel accountsModel = ReflectionMapper.map(dto, AccountsModel.class);
         accountsRepository.insertAccounts(accountsModel);
     }
 

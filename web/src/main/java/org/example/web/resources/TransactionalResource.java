@@ -8,6 +8,8 @@ import jakarta.ws.rs.core.Response;
 import models.TransactionsModel;
 
 @Path("/transaction")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class TransactionalResource {
 
     @Inject

@@ -10,6 +10,7 @@ import jakarta.inject.Named;
 import jakarta.transaction.Transactional;
 import models.UsersModel;
 import jakarta.inject.Inject;
+import org.apache.ibatis.javassist.tools.reflect.Reflection;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -33,13 +34,14 @@ public class UsersService implements UsersServiceInterface {
         if (dto.getBirthdate().isAfter(LocalDate.now())) {
             throw new InvalidDataException("Future data cannot be entered in birthdate");
         }
-        UsersModel usersModel = UsersModel.builder()
-                .name(dto.getName())
-                .email(dto.getEmail())
-                .address(dto.getAddress())
-                .birthdate(dto.getBirthdate())
-                .phoneNumber(dto.getPhoneNumber())
-                .build();
+//        UsersModel usersModel = UsersModel.builder()
+//                .name(dto.getName())
+//                .email(dto.getEmail())
+//                .address(dto.getAddress())
+//                .birthdate(dto.getBirthdate())
+//                .phoneNumber(dto.getPhoneNumber())
+//                .build();
+        UsersModel usersModel= ReflectionMapper.map(dto,UsersModel.class);
         usersRepository.insertUsers(usersModel);
     }
 
@@ -55,14 +57,14 @@ public class UsersService implements UsersServiceInterface {
         if (dto.getBirthdate().isAfter(LocalDate.now())) {
             throw new InvalidDataException("Future data cannot be entered in birthdate");
         }
-        UsersModel usersModel = UsersModel.builder()
-                .name(dto.getName())
-                .email(dto.getEmail())
-                .address(dto.getAddress())
-                .birthdate(dto.getBirthdate())
-                .phoneNumber(dto.getPhoneNumber())
-                .build();
-//        UsersModel usersModel= Reflectio.map(dto,UsersModel.class);
+//        UsersModel usersModel = UsersModel.builder()
+//                .name(dto.getName())
+//                .email(dto.getEmail())
+//                .address(dto.getAddress())
+//                .birthdate(dto.getBirthdate())
+//                .phoneNumber(dto.getPhoneNumber())
+//                .build();
+        UsersModel usersModel= ReflectionMapper.map(dto,UsersModel.class);
         usersRepository.updateUsers(usersModel);
     }
 

@@ -9,8 +9,7 @@ import jakarta.ws.rs.core.MediaType;
 
 @ApplicationScoped
 @ApplicationPath("/api")
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
+
 //we should only have once application layer which will be our base url even though we can have multiple application
 public class MainApplication extends Application {
 

@@ -5,14 +5,13 @@ import java.lang.reflect.Field;
 public class ReflectionMapper {
 
     public static <T, U> U map(T source, Class<U> targetClass) {
+        //T is the source object
         try {
             U target = targetClass.getDeclaredConstructor().newInstance();
-
             // Loop through all fields of source
             for (Field sourceField : source.getClass().getDeclaredFields()) {
                 sourceField.setAccessible(true);
                 Object value = sourceField.get(source); // get value from source
-
                 try {
                     Field targetField = targetClass.getDeclaredField(sourceField.getName());
                     targetField.setAccessible(true);
@@ -21,9 +20,7 @@ public class ReflectionMapper {
                     // skip if field doesn't exist in target
                 }
             }
-
             return target;
-
         } catch (Exception e) {
             throw new RuntimeException("Failed to map " + source.getClass() + " to " + targetClass, e);
         }
