@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.TransactionsMapper">
+
+    <select id="fetchBalance" resultType="double">
+        SELECT balance
+        FROM accountdetails
+        WHERE userid = #{userId}
+    </select>
+
+    <update id="deposit">
+        UPDATE accountdetails
+        SET balance= balance + #{amount}
+        WHERE userid = #{userId}
+    </update>
+
+    <update id="withdraw">
+        UPDATE accountdetails
+        SET balance= balance - #{amount}
+        where userid = #{userId}
+    </update>
+
+    <update id="depositTo">
+        UPDATE accountdetails
+        SET balance = balance + #{amount}
+        WHERE userid = #{targetAccountUserId}
+    </update>
+</mapper>

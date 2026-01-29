@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_2.xsd"
+             version="3.2">
+
+    <persistence-unit name="JeebankPU" transaction-type="JTA">
+        <!-- Use your existing WildFly datasource -->
+        <jta-data-source>java:/PostgresDS</jta-data-source>
+
+        <!-- List all your entities here -->
+        <class>models.UsersModel</class>
+        <class>models.AccountsModel</class>
+        <class>models.TransactionsModel</class>
+
+        <properties>
+            <!-- tells hibernate how to general SQL for postgres -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+
+            <!--            prints sql in console-->
+            <property name="hibernate.show_sql" value="true"/>
+            <!--            makes SQL readable by formatting it-->
+            <property name="hibernate.format_sql" value="true"/>
+
+            <!-- Use existing DB tables this ensures that hibernate won't create any unnecessary tables-->
+            <property name="jakarta.persistence.schema-generation.database.action" value="none"/>
+
+            <!-- Hibernate Search Lucene configuration -->
+            <property name="hibernate.search.backend.type" value="lucene"/>
+            <!-- Where to store Lucene indexes, you can change this path -->
+            <property name="hibernate.search.backend.directory.type" value="local-heap"/>
+            <!-- Optional: automatically create indexes at startup -->
+            <property name="hibernate.search.schema_management.strategy" value="create"/>
+        </properties>
+    </persistence-unit>
+</persistence>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.UsersMapper">
+
+    <resultMap id="UsersResultMap" type="models.UsersModel">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="email" column="email" />
+        <result property="address" column="address" />
+        <result property="phonenumber" column="phonenumber" />
+        <result property="birthdate" column="birthdate" />
+    </resultMap>
+
+    <insert id="insertUsers">
+        INSERT INTO userdetails(name, email, phonenumber, address, birthdate)
+        VALUES (#{name}, #{email}, #{phoneNumber},#{address}, #{birthdate}::date)
+    </insert>
+
+    <select id="findUsersById" resultType="models.UsersModel">
+        SELECT *
+        FROM userdetails
+        WHERE id = #{id}
+    </select>
+
+    <update id="updateUsers">
+        UPDATE userdetails
+        SET name=#{name},
+            email=#{email},
+            phonenumber=#{phoneNumber},
+            address=#{address},
+            birthdate=#{birthdate}::date
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteUsersById">
+        DELETE
+        FROM userdetails
+        WHERE id = #{id}
+    </delete>
+
+    <select id="getAllUsers" resultType="models.UsersModel">
+        SELECT name,email,phonenumber,address,birthdate
+        FROM userdetails LIMIT #{size} OFFSET #{offset}
+    </select>
+
+</mapper>

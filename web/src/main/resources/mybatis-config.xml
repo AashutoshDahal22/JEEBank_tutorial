@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--global configurations for mybatis-->
+<configuration>
+    <!--uses the default jee configurations could be dev test prod-->
+    <environments default="jee">
+        <!--        uses the id of the environment this must match the environment name-->
+        <environment id="jee">
+            <transactionManager type="MANAGED"/>
+            <!--            tells mybatis to not manage transactions and let application server i.e. wildfly manage it-->
+            <dataSource type="JNDI">
+                <!--                using jndi means that the db credentials and configurations are not provided here but look up data source in application servers registry-->
+                <property name="data_source" value="java:/PostgresDS"/>
+                <!--                mybatis will look for jdbc/bankDS in the application server-->
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="mappers/TransactionsMapper.xml"/>
+        <mapper resource="mappers/UsersMapper.xml"/>
+        <mapper resource="mappers/AccountsMapper.xml"/>
+    </mappers>
+</configuration>
