@@ -28,7 +28,6 @@ public class AuthenticationService {
     }
 
     public LoginResponseDTO login(LoginRequestDTO request) {
-        // 1. Fetch user by email using service method (JPQL query)
         UsersModel user;
         try {
             user = usersService.getUsersByEmail(request.getEmail());
@@ -40,16 +39,13 @@ public class AuthenticationService {
             throw new RuntimeException("Invalid email or password");
         }
 
-        // 2. Verify password (plaintext vs hashed)
         if (!BCrypt.checkpw(request.getPassword(), user.getPassword())) {
             throw new RuntimeException("Invalid email or password");
         }
 
-        // 3. Generate JWTs (access + refresh)
         String accessToken = JwtUtil.generateAccessToken(user.getEmail(),user.getRole());
         String refreshToken = JwtUtil.generateRefreshToken(user.getEmail());
 
-        // 4. Map entity to DTO
         UsersDTO userDTO = new UsersDTO();
         userDTO.setId(user.getId());
         userDTO.setName(user.getName());
@@ -58,9 +54,8 @@ public class AuthenticationService {
         userDTO.setBirthdate(user.getBirthdate());
         userDTO.setPhoneNumber(user.getPhoneNumber());
         userDTO.setRole(user.getRole());
-        userDTO.setPassword(null); // never return password
+        userDTO.setPassword(null);
 
-        // 5. Build response
         LoginResponseDTO response = new LoginResponseDTO();
         response.setAccessToken(accessToken);
         response.setRefreshToken(refreshToken);

@@ -22,11 +22,9 @@ public class LoginResource {
     @POST
     public Response login(LoginRequestDTO request) {
         try {
-            // Call the service layer to handle login
             LoginResponseDTO response = authenticationService.login(request);
             return Response.ok(response).build();
         } catch (RuntimeException e) {
-            // Return 401 Unauthorized if login fails
             return Response.status(Response.Status.UNAUTHORIZED).entity("{\"error\":\"" + e.getMessage() + "\"}").build();
         }
     }
