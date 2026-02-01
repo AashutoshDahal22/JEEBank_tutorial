@@ -29,6 +29,11 @@ public class UsersRepository implements UsersRepositoryInterface {
     }
 
     @Override
+    public UsersModel findUsersByEmail(String email) {
+        return usersMapper.findUsersByEmail(email);
+    }
+
+    @Override
     public void updateUsers(UsersModel usersModel) {
         usersMapper.updateUsers(usersModel);
     }

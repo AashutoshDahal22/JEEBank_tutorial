@@ -3,6 +3,7 @@ package hibernate.repository;
 import interfaces.UsersRepositoryInterface;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
+import jakarta.persistence.NoResultException;
 import models.UsersModel;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -24,6 +25,18 @@ public class UsersRepository implements UsersRepositoryInterface {
     @Override
     public UsersModel findUsersById(Long id) {
         return entityManager.find(UsersModel.class, id); //maps the result into instance of the .class provided
+    }
+
+    @Override
+    public UsersModel findUsersByEmail(String email) {
+        try {
+            return entityManager.createQuery(
+                            "SELECT u FROM UsersModel u WHERE u.email = :email", UsersModel.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null; // or throw custom exception
+        }
     }
 
     @Override

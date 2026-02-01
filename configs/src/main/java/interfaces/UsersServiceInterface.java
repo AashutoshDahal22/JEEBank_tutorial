@@ -15,7 +15,9 @@ public interface UsersServiceInterface {
 
     void deleteUsersById(Long id);
 
-    List<UsersModel> getAllUsers(int page,int size);
+    UsersModel getUsersByEmail(String email);
+
+    List<UsersModel> getAllUsers(int page, int size);
 
 //    List<UsersModel> searchUserByName(String keyword);
 //

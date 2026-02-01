@@ -8,6 +8,8 @@ public interface UsersRepositoryInterface {
 
     void insertUsers(UsersModel usersModel);
 
+    UsersModel findUsersByEmail(String email);
+
     UsersModel findUsersById(Long id);
 
     void updateUsers(UsersModel usersModel);
@@ -16,7 +18,4 @@ public interface UsersRepositoryInterface {
 
     List<UsersModel> getAllUsers(int offset, int size);
 
-//    List<UsersModel> searchUserByName(String keyword);
-//
-//    void indexExistingUser();
 }

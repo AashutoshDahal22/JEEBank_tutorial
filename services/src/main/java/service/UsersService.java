@@ -18,11 +18,11 @@ import java.util.List;
 @ApplicationScoped
 public class UsersService implements UsersServiceInterface {
 
-    private final UsersRepositoryInterface usersRepository;
-
     @Inject
-    public UsersService(@Named("hibernateUsers") UsersRepositoryInterface usersRepository) {
-        this.usersRepository = usersRepository;
+    @Named("hibernateUsers")
+    private UsersRepositoryInterface usersRepository;
+
+    public UsersService() {
     }
 
     @Override
@@ -35,9 +35,12 @@ public class UsersService implements UsersServiceInterface {
         if (dto.getBirthdate().isAfter(LocalDate.now())) {
             throw new InvalidDataException("Future data cannot be entered in birthdate");
         }
+        String hashedPassword = org.mindrot.jbcrypt.BCrypt.hashpw(dto.getPassword(), org.mindrot.jbcrypt.BCrypt.gensalt());
+
         UsersModel usersModel = UsersModel.builder()
                 .name(dto.getName())
                 .email(dto.getEmail())
+                .password(hashedPassword)
                 .address(dto.getAddress())
                 .birthdate(dto.getBirthdate())
                 .phoneNumber(dto.getPhoneNumber())
@@ -49,6 +52,12 @@ public class UsersService implements UsersServiceInterface {
     public UsersModel getUsersById(Long id) {
         if (id == null || id < 0) throw new InvalidDataException("cant be null or negative");
         return usersRepository.findUsersById(id);
+    }
+
+    @Override
+    public UsersModel getUsersByEmail(String email) {
+        if (email == null) throw new InvalidDataException("cant be null or negative");
+        return usersRepository.findUsersByEmail(email);
     }
 
     @Override

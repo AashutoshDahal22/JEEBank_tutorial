@@ -25,6 +25,9 @@ public class UsersModel {
     @FullTextField
     private String name;
 
+    @Column(name = "password", length = 50)
+    private String password;
+
     @Column(name = "email", unique = true)
     private String email;
 
@@ -38,8 +41,9 @@ public class UsersModel {
     private String phoneNumber;
 
     @Builder
-    public UsersModel(String name, String email, String address, LocalDate birthdate, String phoneNumber) {
+    public UsersModel(String name, String password, String email, String address, LocalDate birthdate, String phoneNumber) {
         this.name = name;
+        this.password = password;
         this.email = email;
         this.address = address;
         this.birthdate = birthdate;
