@@ -1,14 +1,16 @@
 package service;
 
 import DTO.AccountsDTO;
-import exception.InvalidEmailException;
+import exception.InvalidDataException;
 import interfaces.AccountsRepositoryInterface;
 import interfaces.AccountsServiceInterface;
 import interfaces.UsersRepositoryInterface;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
+import jakarta.transaction.Transactional;
 import models.AccountsModel;
 import jakarta.inject.Inject;
+import models.UsersModel;
 
 import java.util.List;
 
@@ -25,19 +27,24 @@ public class AccountsService implements AccountsServiceInterface {
     }
 
     @Override
+    @Transactional
     public void createAccount(AccountsDTO dto) {
-        if (usersRepository.findUsersById(dto.getUserId()) == null) {
-            throw new InvalidEmailException("UserId is required");
+        if (dto.getUserId() == null) {
+            throw new InvalidDataException("UserId is required");
         }
-//        AccountsModel accountsModel = AccountsModel.builder()
-//                .accountType(dto.getAccountType())
-//                .balance(dto.getBalance())
-//                .currency(dto.getCurrency())
-//                .interestRate(dto.getInterestRate())
-//                .status(dto.getStatus())
-//                .usersModel(usersRepository.findUsersById(dto.getUserId()))
-//                .build();
-        AccountsModel accountsModel = ReflectionMapper.map(dto, AccountsModel.class);
+        UsersModel user = usersRepository.findUsersById(dto.getUserId());
+        if (user == null) {
+            throw new InvalidDataException("UserId is required and must exist");
+        }
+        AccountsModel accountsModel = AccountsModel.builder()
+                .accountType(dto.getAccountType())
+                .balance(dto.getBalance())
+                .currency(dto.getCurrency())
+                .interestRate(dto.getInterestRate())
+                .status(dto.getStatus())
+                .usersModel(user)
+                .build();
+//        AccountsModel accountsModel = ReflectionMapper.map(dto, AccountsModel.class);
         accountsRepository.insertAccounts(accountsModel);
     }
 

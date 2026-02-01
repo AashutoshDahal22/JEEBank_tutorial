@@ -26,6 +26,7 @@ public class UsersService implements UsersServiceInterface {
     }
 
     @Override
+    @Transactional
     public void createUser(UsersDTO dto) {
         if (dto.getEmail() == null || dto.getEmail().isBlank()) {
             throw new InvalidEmailException("Email is Required");
@@ -34,14 +35,13 @@ public class UsersService implements UsersServiceInterface {
         if (dto.getBirthdate().isAfter(LocalDate.now())) {
             throw new InvalidDataException("Future data cannot be entered in birthdate");
         }
-//        UsersModel usersModel = UsersModel.builder()
-//                .name(dto.getName())
-//                .email(dto.getEmail())
-//                .address(dto.getAddress())
-//                .birthdate(dto.getBirthdate())
-//                .phoneNumber(dto.getPhoneNumber())
-//                .build();
-        UsersModel usersModel= ReflectionMapper.map(dto,UsersModel.class);
+        UsersModel usersModel = UsersModel.builder()
+                .name(dto.getName())
+                .email(dto.getEmail())
+                .address(dto.getAddress())
+                .birthdate(dto.getBirthdate())
+                .phoneNumber(dto.getPhoneNumber())
+                .build();
         usersRepository.insertUsers(usersModel);
     }
 
@@ -54,17 +54,20 @@ public class UsersService implements UsersServiceInterface {
     @Override
     @Transactional
     public void updateUsers(UsersDTO dto) {
+        if (dto.getId() == null || dto.getId() == -1) {
+            throw new InvalidDataException("Users with null or negative users id cannot be updated");
+        }
         if (dto.getBirthdate().isAfter(LocalDate.now())) {
             throw new InvalidDataException("Future data cannot be entered in birthdate");
         }
-//        UsersModel usersModel = UsersModel.builder()
-//                .name(dto.getName())
-//                .email(dto.getEmail())
-//                .address(dto.getAddress())
-//                .birthdate(dto.getBirthdate())
-//                .phoneNumber(dto.getPhoneNumber())
-//                .build();
-        UsersModel usersModel= ReflectionMapper.map(dto,UsersModel.class);
+        UsersModel usersModel = UsersModel.builder()
+                .name(dto.getName())
+                .email(dto.getEmail())
+                .address(dto.getAddress())
+                .birthdate(dto.getBirthdate())
+                .phoneNumber(dto.getPhoneNumber())
+                .build();
+//        UsersModel usersModel = ReflectionMapper.map(dto, UsersModel.class);
         usersRepository.updateUsers(usersModel);
     }
 
