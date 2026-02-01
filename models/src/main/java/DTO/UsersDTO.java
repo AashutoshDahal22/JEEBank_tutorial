@@ -3,7 +3,6 @@ package DTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.time.LocalDate;
 
 @Getter
@@ -17,4 +16,5 @@ public class UsersDTO {
     private String address;
     private LocalDate birthdate;
     private String phoneNumber;
+    private String role;
 }

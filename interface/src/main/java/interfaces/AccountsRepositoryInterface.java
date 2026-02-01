@@ -1,6 +1,5 @@
 package interfaces;
 
-import DTO.AccountsDTO;
 import models.AccountsModel;
 
 import java.util.List;

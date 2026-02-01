@@ -57,6 +57,7 @@ public class AuthenticationService {
         userDTO.setAddress(user.getAddress());
         userDTO.setBirthdate(user.getBirthdate());
         userDTO.setPhoneNumber(user.getPhoneNumber());
+        userDTO.setRole(user.getRole());
         userDTO.setPassword(null); // never return password
 
         // 5. Build response

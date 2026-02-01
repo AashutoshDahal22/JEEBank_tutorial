@@ -1,7 +1,5 @@
 package org.example.web.resources.authentication;
 
-import DTO.LoginRequestDTO;
-import DTO.LoginResponseDTO;
 import DTO.UsersDTO;
 import authentication.AuthenticationService;
 import jakarta.inject.Inject;

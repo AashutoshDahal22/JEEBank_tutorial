@@ -12,12 +12,13 @@
         <result property="password" column="password" />
         <result property="address" column="address" />
         <result property="phonenumber" column="phonenumber" />
+        <result property="role" column="role" />
         <result property="birthdate" column="birthdate" />
     </resultMap>
 
     <insert id="insertUsers">
-        INSERT INTO userdetails(name, email, phonenumber, password, address, birthdate)
-        VALUES (#{name}, #{email}, #{phoneNumber}, #{password}, #{address}, #{birthdate}::date)
+        INSERT INTO userdetails(name, email, phonenumber, password, address, birthdate, role)
+        VALUES (#{name}, #{email}, #{phoneNumber}, #{password},#{role}, #{address}, #{birthdate}::date)
     </insert>
 
     <select id="findUsersById" resultType="models.UsersModel">
@@ -49,7 +50,7 @@
     </delete>
 
     <select id="getAllUsers" resultType="models.UsersModel">
-        SELECT name,email,phonenumber,address,birthdate
+        SELECT name,email,phonenumber,address,birthdate,role
         FROM userdetails LIMIT #{size} OFFSET #{offset}
     </select>
 

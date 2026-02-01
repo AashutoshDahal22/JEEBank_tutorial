@@ -40,13 +40,17 @@ public class UsersModel {
     @Column(name = "phonenumber", length = 15)
     private String phoneNumber;
 
+    @Column(name = "role")
+    private String role;
+
     @Builder
-    public UsersModel(String name, String password, String email, String address, LocalDate birthdate, String phoneNumber) {
+    public UsersModel(String name, String password, String email, String address, LocalDate birthdate, String phoneNumber, String role) {
         this.name = name;
         this.password = password;
         this.email = email;
         this.address = address;
         this.birthdate = birthdate;
         this.phoneNumber = phoneNumber;
+        this.role = role;
     }
 }

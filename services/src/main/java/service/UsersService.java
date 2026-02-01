@@ -10,7 +10,6 @@ import jakarta.inject.Named;
 import jakarta.transaction.Transactional;
 import models.UsersModel;
 import jakarta.inject.Inject;
-import org.apache.ibatis.javassist.tools.reflect.Reflection;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -44,6 +43,7 @@ public class UsersService implements UsersServiceInterface {
                 .address(dto.getAddress())
                 .birthdate(dto.getBirthdate())
                 .phoneNumber(dto.getPhoneNumber())
+                .role(dto.getRole())
                 .build();
         usersRepository.insertUsers(usersModel);
     }
