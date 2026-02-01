@@ -10,12 +10,13 @@ import java.util.Date;
 public class JwtUtil {
 
     private static final String secret = "superSecretKey";
-    private static final Long tokenExpirationTime = 100L;
+    private static final Long tokenExpirationTime = 15 * 60 * 10000L;
 
-    public static String generateAccessToken(String email) {
+    public static String generateAccessToken(String email,String role) {
         return JWT.create()
                 .withIssuer("JEEBank")
                 .withSubject(email)
+                .withClaim("role", role)
                 .withExpiresAt(new Date(System.currentTimeMillis() + tokenExpirationTime))
                 .sign(Algorithm.HMAC256(secret));
     }

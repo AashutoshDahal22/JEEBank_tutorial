@@ -49,12 +49,16 @@ public class UsersService implements UsersServiceInterface {
     }
 
     @Override
+    @Transactional
+
     public UsersModel getUsersById(Long id) {
         if (id == null || id < 0) throw new InvalidDataException("cant be null or negative");
         return usersRepository.findUsersById(id);
     }
 
     @Override
+    @Transactional
+
     public UsersModel getUsersByEmail(String email) {
         if (email == null) throw new InvalidDataException("cant be null or negative");
         return usersRepository.findUsersByEmail(email);
@@ -81,12 +85,16 @@ public class UsersService implements UsersServiceInterface {
     }
 
     @Override
+    @Transactional
+
     public void deleteUsersById(Long id) {
         if (id == null || id < 0) throw new InvalidDataException("cant be null or negative");
         usersRepository.deleteUsersById(id);
     }
 
     @Override
+    @Transactional
+
     public List<UsersModel> getAllUsers(int page, int size) {
         if (page == 0 && size == 0)
             throw new InvalidDataException("Size and page cannot be null since they are query params");

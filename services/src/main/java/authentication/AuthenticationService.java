@@ -46,7 +46,7 @@ public class AuthenticationService {
         }
 
         // 3. Generate JWTs (access + refresh)
-        String accessToken = JwtUtil.generateAccessToken(user.getEmail());
+        String accessToken = JwtUtil.generateAccessToken(user.getEmail(),user.getRole());
         String refreshToken = JwtUtil.generateRefreshToken(user.getEmail());
 
         // 4. Map entity to DTO
