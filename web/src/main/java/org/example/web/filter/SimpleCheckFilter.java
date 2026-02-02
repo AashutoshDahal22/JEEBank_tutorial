@@ -7,13 +7,11 @@ import jakarta.ws.rs.container.ContainerRequestFilter;
 import jakarta.ws.rs.container.ResourceInfo;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.SecurityContext;
 import jakarta.ws.rs.ext.Provider;
 import org.example.web.annotation.JwtRolesAllowed;
 import utils.JwtUtil;
 
 import java.io.IOException;
-import java.security.Principal;
 import java.util.Arrays;
 
 
@@ -54,9 +52,9 @@ public class SimpleCheckFilter implements ContainerRequestFilter {
         }
 
         // Get method-level annotation
-        JwtRolesAllowed rolesAnnotation = resourceInfo.getResourceMethod().getAnnotation(JwtRolesAllowed.class);
+        JwtRolesAllowed rolesAnnotation = this.resourceInfo.getResourceMethod().getAnnotation(JwtRolesAllowed.class);
         if (rolesAnnotation == null) {
-            rolesAnnotation = resourceInfo.getResourceClass().getAnnotation(JwtRolesAllowed.class);
+            rolesAnnotation = this.resourceInfo.getResourceClass().getAnnotation(JwtRolesAllowed.class);
         }
 
         if (rolesAnnotation != null) {
