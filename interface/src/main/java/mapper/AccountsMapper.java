@@ -1,5 +1,6 @@
 package mapper;
 
+import accounts.AccountsStatus;
 import models.AccountsModel;
 import org.apache.ibatis.annotations.Param;
 
@@ -8,6 +9,8 @@ import java.util.List;
 public interface AccountsMapper {
 
     void insertAccounts(AccountsModel accounts);
+
+    void updateAccountStatus(Long accountNumber, AccountsStatus status);
 
     AccountsModel findAccountById(Long userid);
 

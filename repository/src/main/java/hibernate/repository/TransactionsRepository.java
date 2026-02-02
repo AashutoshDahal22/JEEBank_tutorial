@@ -1,6 +1,6 @@
 package hibernate.repository;
 
-import interfaces.TransactionsRepositoryInterface;
+import interfaces.transactions.TransactionsRepositoryInterface;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
 import models.TransactionsModel;

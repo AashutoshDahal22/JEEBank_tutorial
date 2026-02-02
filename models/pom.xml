@@ -44,5 +44,9 @@
             <version>2.19.2</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>enums</artifactId>
+        </dependency>
     </dependencies>
 </project>

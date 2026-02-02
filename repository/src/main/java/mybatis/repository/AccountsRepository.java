@@ -1,6 +1,7 @@
 package mybatis.repository;
 
-import interfaces.AccountsRepositoryInterface;
+import accounts.AccountsStatus;
+import interfaces.accounts.AccountsRepositoryInterface;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
 import mapper.AccountsMapper;
@@ -22,6 +23,11 @@ public class AccountsRepository implements AccountsRepositoryInterface {
     }
 
     @Override
+    public void updateAccountStatus(Long accountNumber, AccountsStatus accountsStatus) {
+        accountsMapper.updateAccountStatus(accountNumber, accountsStatus);
+    }
+
+    @Override
     public AccountsModel findAccountById(Long userId) {
         return accountsMapper.findAccountById(userId);
     }
@@ -33,6 +39,6 @@ public class AccountsRepository implements AccountsRepositoryInterface {
 
     @Override
     public List<AccountsModel> findAllAccounts(int offset, int size) {
-        return accountsMapper.findAllAccounts(offset,size);
+        return accountsMapper.findAllAccounts(offset, size);
     }
 }

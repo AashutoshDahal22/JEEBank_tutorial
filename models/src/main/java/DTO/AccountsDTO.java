@@ -1,5 +1,6 @@
 package DTO;
 
+import accounts.AccountsStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ public class AccountsDTO {
     private double balance;
     private Long userId;
     private String accountType;
-    private String status;
+    private AccountsStatus status;
     private String currency;
     private double interestRate;
 }

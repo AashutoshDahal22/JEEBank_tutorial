@@ -1,7 +1,7 @@
 import DTO.UsersDTO;
 import exception.InvalidDataException;
 import exception.InvalidEmailException;
-import interfaces.UsersRepositoryInterface;
+import interfaces.users.UsersRepositoryInterface;
 import models.UsersModel;
 import org.mockito.ArgumentCaptor;
 import service.UsersService;

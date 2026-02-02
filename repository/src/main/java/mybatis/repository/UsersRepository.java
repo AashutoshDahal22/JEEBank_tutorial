@@ -1,6 +1,6 @@
 package mybatis.repository;
 
-import interfaces.UsersRepositoryInterface;
+import interfaces.users.UsersRepositoryInterface;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
 import mapper.UsersMapper;

@@ -1,4 +1,4 @@
-package interfaces;
+package interfaces.users;
 
 import DTO.UsersDTO;
 import models.UsersModel;

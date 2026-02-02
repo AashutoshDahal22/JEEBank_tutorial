@@ -1,4 +1,4 @@
-package interfaces;
+package interfaces.users;
 
 import models.UsersModel;
 

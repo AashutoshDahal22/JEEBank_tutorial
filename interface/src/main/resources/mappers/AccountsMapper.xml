@@ -6,7 +6,7 @@
 <mapper namespace="mapper.AccountsMapper">
 
     <resultMap id="AccountsResultMap" type="models.AccountsModel">
-        <result property="accountNumber" column="accountnumber"/>
+        <id property="accountNumber" column="accountnumber"/>
         <result property="balance" column="balance"/>
         <result property="accountType" column="account_type"/>
         <result property="status" column="status"/>
@@ -59,6 +59,12 @@
         WHERE userid = #{usersModel.id}
     </update>
 
+    <update id="updateAccountStatus">
+        UPDATE accountdetails
+        SET status = #{status}
+        WHERE accountnumber = #{accountNumber}
+    </update>
+
     <delete id="deleteAccountById">
         DELETE
         FROM accountdetails
@@ -66,23 +72,23 @@
     </delete>
 
     <select id="findAllAccounts" resultMap="AccountsResultMap" parameterType="map">
-        SELECT
-            a.accountnumber,
-            a.balance,
-            a.account_type,
-            a.status,
-            a.currency,
-            a.interest_rate,
-            u.id AS user_id,
-            u.name AS name,
-            u.email AS email,
-            u.address AS address,
-            u.phonenumber AS phonenumber,
-            u.birthdate AS birthdate
+        SELECT a.accountnumber,
+               a.balance,
+               a.account_type,
+               a.status,
+               a.currency,
+               a.interest_rate,
+               u.id          AS user_id,
+               u.name        AS name,
+               u.email       AS email,
+               u.address     AS address,
+               u.phonenumber AS phonenumber,
+               u.birthdate   AS birthdate
         FROM accountdetails a
                  JOIN userdetails u ON a.userid = u.id
         ORDER BY a.accountnumber
-            LIMIT #{size} OFFSET #{offset}
+            LIMIT #{size}
+        OFFSET #{offset}
     </select>
 
 

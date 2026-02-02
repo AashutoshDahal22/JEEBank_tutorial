@@ -11,6 +11,7 @@
         <module>models</module>
         <module>configs</module>
         <module>repository</module>
+        <module>enums</module>
         <module>interface</module>
         <module>services</module>
         <module>web</module>
@@ -40,6 +41,11 @@
             <dependency>
                 <groupId>com.example</groupId>
                 <artifactId>interface</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.example</groupId>
+                <artifactId>enums</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
         </dependencies>

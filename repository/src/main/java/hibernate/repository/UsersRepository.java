@@ -1,6 +1,6 @@
 package hibernate.repository;
 
-import interfaces.UsersRepositoryInterface;
+import interfaces.users.UsersRepositoryInterface;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
 import jakarta.persistence.NoResultException;

@@ -1,12 +1,13 @@
-package org.example.web.resources;
+package org.example.web.resources.transaction;
 
-import interfaces.TransactionsServiceInterface;
+import interfaces.transactions.TransactionsServiceInterface;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import models.TransactionsModel;
 import org.example.web.annotation.JwtRolesAllowed;
+import users.ClientRoles;
 
 @Path("/transaction")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -18,7 +19,8 @@ public class TransactionalResource {
 
     public TransactionalResource(){}
 
-    @JwtRolesAllowed({"User"})
+
+    @JwtRolesAllowed({ClientRoles.USER})
     @POST
     @Path("/transfer")
     public Response transfer(TransactionsModel transactions) {
@@ -26,7 +28,8 @@ public class TransactionalResource {
         return Response.status(Response.Status.CREATED).build();
     }
 
-    @JwtRolesAllowed({"User","Admin"})
+    @JwtRolesAllowed({ClientRoles.USER, ClientRoles.ADMIN})
+
     @GET
     @Path("/checkBalance/{userId}")
     public Response checkBalance(@PathParam("userId") Long userId) {
@@ -34,7 +37,8 @@ public class TransactionalResource {
         return Response.ok(balance).build();
     }
 
-    @JwtRolesAllowed({"User"})
+    @JwtRolesAllowed({ClientRoles.USER})
+
     @POST
     @Path("/deposit")
     public Response deposit(TransactionsModel transactions) {
@@ -42,7 +46,7 @@ public class TransactionalResource {
         return Response.status(Response.Status.CREATED).build();
     }
 
-    @JwtRolesAllowed({"User"})
+    @JwtRolesAllowed({ClientRoles.USER})
     @POST
     @Path("/withdraw")
     public Response withdraw(TransactionsModel transactions) {

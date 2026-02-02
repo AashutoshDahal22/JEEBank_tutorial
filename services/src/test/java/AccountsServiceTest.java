@@ -1,8 +1,9 @@
 import DTO.AccountsDTO;
 import DTO.UsersDTO;
+import accounts.AccountsStatus;
 import exception.InvalidDataException;
-import interfaces.AccountsRepositoryInterface;
-import interfaces.UsersRepositoryInterface;
+import interfaces.accounts.AccountsRepositoryInterface;
+import interfaces.users.UsersRepositoryInterface;
 import models.AccountsModel;
 import models.UsersModel;
 import org.mockito.ArgumentCaptor;
@@ -54,7 +55,7 @@ public class AccountsServiceTest {
         accountsDTO.setBalance(1000.0);
         accountsDTO.setAccountType("Savings");
         accountsDTO.setUserId(usersDTO.getId());
-        accountsDTO.setStatus("Active");
+        accountsDTO.setStatus(AccountsStatus.ACTIVE);
         accountsDTO.setCurrency("USD");
         accountsDTO.setInterestRate(3.5);
     }
