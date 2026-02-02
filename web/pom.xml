@@ -54,6 +54,12 @@
             <groupId>com.example</groupId>
             <artifactId>services</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>

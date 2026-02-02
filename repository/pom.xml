@@ -37,5 +37,9 @@
             <groupId>com.example</groupId>
             <artifactId>configs</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>models</artifactId>
+        </dependency>
     </dependencies>
 </project>

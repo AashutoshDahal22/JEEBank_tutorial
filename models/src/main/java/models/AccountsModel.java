@@ -4,6 +4,8 @@ import lombok.*;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import jakarta.persistence.*;
+import accounts.AccountsStatus;
+import models.UsersModel;
 
 @Entity
 @Table(name = "accountdetails")
@@ -17,7 +19,7 @@ public class AccountsModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "accountnumber", nullable = false, unique = true)
-    private String accountNumber;
+    private Long accountNumber;
 
     @Column(name = "balance", nullable = false)
     private double balance;
@@ -30,8 +32,9 @@ public class AccountsModel {
     @FullTextField
     private String accountType;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private String status;
+    private AccountsStatus status;
 
     @Column(name = "currency", nullable = false)
     private String currency;
@@ -41,7 +44,7 @@ public class AccountsModel {
 
     @Builder
     public AccountsModel(double balance, UsersModel usersModel, String accountType,
-                         String status, String currency, double interestRate) {
+                         AccountsStatus status, String currency, double interestRate) {
         this.balance = balance;
         this.usersModel = usersModel;
         this.accountType = accountType;

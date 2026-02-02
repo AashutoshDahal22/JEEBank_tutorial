@@ -1,8 +1,7 @@
 package mybatis.repository;
 
-import interfaces.UsersRepositoryInterface;
+import interfaces.users.UsersRepositoryInterface;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 import mapper.UsersMapper;
 import models.UsersModel;
@@ -26,6 +25,11 @@ public class UsersRepository implements UsersRepositoryInterface {
     @Override
     public UsersModel findUsersById(Long id) {
         return usersMapper.findUsersById(id);
+    }
+
+    @Override
+    public UsersModel findUsersByEmail(String email) {
+        return usersMapper.findUsersByEmail(email);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package org.example.web;
 
+import jakarta.annotation.security.DeclareRoles;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.Consumes;
@@ -9,8 +10,6 @@ import jakarta.ws.rs.core.MediaType;
 
 @ApplicationScoped
 @ApplicationPath("/api")
-
-//we should only have once application layer which will be our base url even though we can have multiple application
 public class MainApplication extends Application {
 
 }

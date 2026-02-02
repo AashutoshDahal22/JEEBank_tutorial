@@ -1,10 +1,12 @@
 package service;
 
+import DTO.AccountStatusUpdateDTO;
 import DTO.AccountsDTO;
+import accounts.AccountsStatus;
 import exception.InvalidDataException;
-import interfaces.AccountsRepositoryInterface;
-import interfaces.AccountsServiceInterface;
-import interfaces.UsersRepositoryInterface;
+import interfaces.accounts.AccountsRepositoryInterface;
+import interfaces.accounts.AccountsServiceInterface;
+import interfaces.users.UsersRepositoryInterface;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
 import jakarta.transaction.Transactional;
@@ -46,6 +48,12 @@ public class AccountsService implements AccountsServiceInterface {
                 .build();
 //        AccountsModel accountsModel = ReflectionMapper.map(dto, AccountsModel.class);
         accountsRepository.insertAccounts(accountsModel);
+    }
+
+    @Override
+    @Transactional
+    public void updateAccountStatus(Long accountNumber, AccountStatusUpdateDTO dto) {
+        accountsRepository.updateAccountStatus(accountNumber, dto.getStatus());
     }
 
     @Override

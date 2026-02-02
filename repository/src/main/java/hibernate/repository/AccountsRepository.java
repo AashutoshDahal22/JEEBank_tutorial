@@ -1,6 +1,7 @@
 package hibernate.repository;
 
-import interfaces.AccountsRepositoryInterface;
+import accounts.AccountsStatus;
+import interfaces.accounts.AccountsRepositoryInterface;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
 import models.AccountsModel;
@@ -25,6 +26,12 @@ public class AccountsRepository implements AccountsRepositoryInterface {
     public AccountsModel findAccountById(Long userId) {
         return entityManager.createQuery("SELECT a from AccountsModel a where a.usersModel.id=:userId", AccountsModel.class).setParameter("userId", userId).getSingleResult();
     }
+
+    @Override
+    public void updateAccountStatus(Long accountNumber, AccountsStatus accountsStatus){
+        entityManager.createQuery("UPDATE AccountsModel a SET a.status= :status where a.accountNumber=:accountNumber").setParameter("status", accountsStatus).setParameter("accountNumber",accountNumber).executeUpdate();
+    }
+
 
     @Override
     public void deleteAccountById(Long userId) {

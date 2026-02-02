@@ -1,7 +1,7 @@
 import exception.InSufficientBalanceException;
 import exception.InvalidAmountException;
 import exception.InvalidUserException;
-import interfaces.TransactionsRepositoryInterface;
+import interfaces.transactions.TransactionsRepositoryInterface;
 import models.TransactionsModel;
 import service.TransactionsService;
 import org.junit.jupiter.api.BeforeEach;

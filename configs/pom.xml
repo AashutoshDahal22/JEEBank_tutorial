@@ -58,7 +58,7 @@
 <!--        this is initialized in the parent pom just declared here-->
         <dependency>
             <groupId>com.example</groupId>
-            <artifactId>models</artifactId>
+            <artifactId>interface</artifactId>
         </dependency>
     </dependencies>
 

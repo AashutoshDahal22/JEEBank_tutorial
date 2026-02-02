@@ -1,8 +1,7 @@
 package mybatis.repository;
 
-import interfaces.TransactionsRepositoryInterface;
+import interfaces.transactions.TransactionsRepositoryInterface;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 import mapper.TransactionsMapper;
 import models.TransactionsModel;
