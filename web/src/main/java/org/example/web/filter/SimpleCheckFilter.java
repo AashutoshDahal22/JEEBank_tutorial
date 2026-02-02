@@ -1,23 +1,32 @@
 package org.example.web.filter;
 
-import com.auth0.jwt.interfaces.DecodedJWT;
+import jakarta.annotation.Priority;
+import jakarta.ws.rs.Priorities;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerRequestFilter;
+import jakarta.ws.rs.container.ResourceInfo;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.SecurityContext;
 import jakarta.ws.rs.ext.Provider;
+import org.example.web.annotation.JwtRolesAllowed;
 import utils.JwtUtil;
 
 import java.io.IOException;
+import java.security.Principal;
+import java.util.Arrays;
 
 
 @Provider
+@Priority(Priorities.AUTHENTICATION)
 public class SimpleCheckFilter implements ContainerRequestFilter {
+
+    @Context
+    private ResourceInfo resourceInfo;
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
-        System.out.println("Incoming request: " + requestContext.getMethod() + " " + requestContext.getUriInfo().getPath());
         String path = requestContext.getUriInfo().getPath();
-
         if (path.endsWith("login") || path.endsWith("register")) {
             return;
         }
@@ -29,13 +38,38 @@ public class SimpleCheckFilter implements ContainerRequestFilter {
             return;
         }
 
-        String token = authHeader.substring("Bearer ".length());
-        DecodedJWT decoded = JwtUtil.validateToken(token);
-        String role = decoded.getClaim("role").asString();
+        String token = authHeader.substring("Bearer ".length()).trim();
+        String role;
+        try {
+            role = JwtUtil.extractRole(token);
+            System.out.println("Role " + role);
 
-        if ("DELETE".equals(requestContext.getMethod()) && !"ADMIN".equals(role)) {
-            requestContext.abortWith(Response.status(Response.Status.FORBIDDEN)
-                    .entity("Admin role required").build());
+            if (role == null) {
+                throw new Exception("Invalid token");
+            }
+        } catch (Exception e) {
+            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
+                    .entity("Invalid token").build());
+            return;
+        }
+
+        // Get method-level annotation
+        JwtRolesAllowed rolesAnnotation = resourceInfo.getResourceMethod().getAnnotation(JwtRolesAllowed.class);
+        if (rolesAnnotation == null) {
+            rolesAnnotation = resourceInfo.getResourceClass().getAnnotation(JwtRolesAllowed.class);
+        }
+
+        if (rolesAnnotation != null) {
+            System.out.println("Roles allowed by annotation: " + Arrays.toString(rolesAnnotation.value()));
+
+            boolean allowed = Arrays.stream(rolesAnnotation.value())
+                    .anyMatch(r -> r.equals(role));
+
+            if (!allowed) {
+                requestContext.abortWith(Response.status(Response.Status.FORBIDDEN)
+                        .entity("Forbidden: insufficient role").build());
+                return;
+            }
         }
     }
 }

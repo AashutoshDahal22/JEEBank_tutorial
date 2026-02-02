@@ -10,6 +10,7 @@ import jakarta.inject.Named;
 import jakarta.transaction.Transactional;
 import models.UsersModel;
 import jakarta.inject.Inject;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -34,7 +35,7 @@ public class UsersService implements UsersServiceInterface {
         if (dto.getBirthdate().isAfter(LocalDate.now())) {
             throw new InvalidDataException("Future data cannot be entered in birthdate");
         }
-        String hashedPassword = org.mindrot.jbcrypt.BCrypt.hashpw(dto.getPassword(), org.mindrot.jbcrypt.BCrypt.gensalt());
+        String hashedPassword = BCrypt.hashpw(dto.getPassword(), BCrypt.gensalt());
 
         UsersModel usersModel = UsersModel.builder()
                 .name(dto.getName())

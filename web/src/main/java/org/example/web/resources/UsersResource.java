@@ -7,6 +7,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import models.UsersModel;
+import org.example.web.annotation.JwtRolesAllowed;
 
 import java.util.List;
 
@@ -21,33 +22,38 @@ public class UsersResource {
     public UsersResource() {
     }
 
+    @JwtRolesAllowed({"User","Admin"})
     @POST
     public Response createUser(UsersDTO dto) {
-        userService.createUser(dto);
+        this.userService.createUser(dto);
         return Response.status(Response.Status.CREATED).build();
     }
 
+    @JwtRolesAllowed({"User","Admin"})
     @GET
     @Path("/{id}")
     public UsersModel getUser(@PathParam("id") Long id) {
-        return userService.getUsersById(id);
+        return this.userService.getUsersById(id);
     }
 
+    @JwtRolesAllowed({"User","Admin"})
     @GET
     public List<UsersModel> getAllUser(@QueryParam("page") @DefaultValue("1") int page, @QueryParam("size") @DefaultValue("10") int size) {
-        return userService.getAllUsers(page, size);
+        return this.userService.getAllUsers(page, size);
     }
 
+    @JwtRolesAllowed({"User","Admin"})
     @PUT
     public Response updateUser(UsersDTO dto) {
-        userService.updateUsers(dto);
+        this.userService.updateUsers(dto);
         return Response.ok().build();
     }
 
+    @JwtRolesAllowed({"Admin"})
     @DELETE
     @Path("/{id}")
     public Response deleteUser(@PathParam("id") Long id) {
-        userService.deleteUsersById(id);
+        this.userService.deleteUsersById(id);
         return Response.noContent().build();
     }
 

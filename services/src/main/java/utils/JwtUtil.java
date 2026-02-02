@@ -10,9 +10,9 @@ import java.util.Date;
 public class JwtUtil {
 
     private static final String secret = "superSecretKey";
-    private static final Long tokenExpirationTime = 15 * 60 * 10000L;
+    private static final Long tokenExpirationTime = 15 * 60 * 1000L;
 
-    public static String generateAccessToken(String email,String role) {
+    public static String generateAccessToken(String email, String role) {
         return JWT.create()
                 .withIssuer("JEEBank")
                 .withSubject(email)
@@ -37,7 +37,25 @@ public class JwtUtil {
         return verifier.verify(token);
     }
 
-    public long getAccessTokenExpiration() {
+    public static String extractRole(String token) {
+        try {
+            DecodedJWT decodedJWT = validateToken(token);
+            return decodedJWT.getClaim("role").asString();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static String extractUsername(String token) {
+        try {
+            DecodedJWT decodedJWT = validateToken(token);
+            return decodedJWT.getSubject();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static long getAccessTokenExpiration() {
         return tokenExpirationTime;
     }
 }

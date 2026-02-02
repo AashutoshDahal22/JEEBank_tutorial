@@ -6,6 +6,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import models.TransactionsModel;
+import org.example.web.annotation.JwtRolesAllowed;
 
 @Path("/transaction")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -17,31 +18,35 @@ public class TransactionalResource {
 
     public TransactionalResource(){}
 
+    @JwtRolesAllowed({"User"})
     @POST
     @Path("/transfer")
     public Response transfer(TransactionsModel transactions) {
-        transactionsService.transfer(transactions);
+        this.transactionsService.transfer(transactions);
         return Response.status(Response.Status.CREATED).build();
     }
 
+    @JwtRolesAllowed({"User","Admin"})
     @GET
     @Path("/checkBalance/{userId}")
     public Response checkBalance(@PathParam("userId") Long userId) {
-        Double balance = transactionsService.checkBalance(userId);
+        Double balance = this.transactionsService.checkBalance(userId);
         return Response.ok(balance).build();
     }
 
+    @JwtRolesAllowed({"User"})
     @POST
     @Path("/deposit")
     public Response deposit(TransactionsModel transactions) {
-        transactionsService.deposit(transactions);
+        this.transactionsService.deposit(transactions);
         return Response.status(Response.Status.CREATED).build();
     }
 
+    @JwtRolesAllowed({"User"})
     @POST
     @Path("/withdraw")
     public Response withdraw(TransactionsModel transactions) {
-        transactionsService.withdraw(transactions);
+        this.transactionsService.withdraw(transactions);
         return Response.status(Response.Status.CREATED).build();
     }
 }
