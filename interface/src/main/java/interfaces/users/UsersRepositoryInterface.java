@@ -12,7 +12,7 @@ public interface UsersRepositoryInterface {
 
     UsersModel findUsersById(Long id);
 
-    void updateUsers(UsersModel usersModel);
+//    void updateUsers(Long id, UsersModel usersModel);
 
     void deleteUsersById(Long id);
 

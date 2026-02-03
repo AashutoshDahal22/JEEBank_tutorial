@@ -9,6 +9,7 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.Provider;
 import org.example.web.annotation.JwtRolesAllowed;
+import users.ClientRoles;
 import utils.JwtUtil;
 
 import java.io.IOException;
@@ -37,12 +38,10 @@ public class SimpleCheckFilter implements ContainerRequestFilter {
         }
 
         String token = authHeader.substring("Bearer ".length()).trim();
-        String role;
+        String roleStr;
         try {
-            role = JwtUtil.extractRole(token);
-            System.out.println("Role " + role);
-
-            if (role == null) {
+            roleStr = JwtUtil.extractRole(token);
+            if (roleStr == null) {
                 throw new Exception("Invalid token");
             }
         } catch (Exception e) {
@@ -51,7 +50,16 @@ public class SimpleCheckFilter implements ContainerRequestFilter {
             return;
         }
 
-        // Get method-level annotation
+        ClientRoles role;
+        try {
+            role = ClientRoles.valueOf(roleStr);  // Convert the string to ClientRoles enum
+        } catch (IllegalArgumentException e) {
+            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
+                    .entity("Invalid role in token").build());
+            return;
+        }
+
+
         JwtRolesAllowed rolesAnnotation = this.resourceInfo.getResourceMethod().getAnnotation(JwtRolesAllowed.class);
         if (rolesAnnotation == null) {
             rolesAnnotation = this.resourceInfo.getResourceClass().getAnnotation(JwtRolesAllowed.class);

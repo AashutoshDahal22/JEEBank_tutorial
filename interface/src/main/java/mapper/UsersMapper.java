@@ -11,7 +11,7 @@ public interface UsersMapper {
 
     UsersModel findUsersById(Long id);
 
-    void updateUsers(UsersModel users);
+    void updateUsers(Long id, UsersModel users);
 
     void deleteUsersById(Long id);
 

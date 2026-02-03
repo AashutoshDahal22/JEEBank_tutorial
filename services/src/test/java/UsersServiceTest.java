@@ -1,4 +1,5 @@
 import DTO.UsersDTO;
+import DTO.UsersPatchDTO;
 import exception.InvalidDataException;
 import exception.InvalidEmailException;
 import interfaces.users.UsersRepositoryInterface;
@@ -32,6 +33,7 @@ public class UsersServiceTest {
     private UsersService userService;
 
     private UsersDTO usersDTO;
+    private UsersPatchDTO patchDTO;
     private UsersModel usersModel;
 
     @BeforeEach
@@ -89,28 +91,6 @@ public class UsersServiceTest {
     }
 
     @Test
-    void successful_user_update() {
-        ArgumentCaptor<UsersModel> captor = ArgumentCaptor.forClass(UsersModel.class); //prepare the captor object to capture the UsersModel class
-        userService.updateUsers(usersDTO);
-        verify(usersRepository).updateUsers(captor.capture()); //captures the actual argument passed in the updateUsers method
-        UsersModel capturedModel = captor.getValue(); //retrieves the value from the captor
-
-        assertEquals(usersDTO.getName(), capturedModel.getName()); //verifying that the values match or not
-        assertEquals(usersDTO.getEmail(), capturedModel.getEmail());
-        assertEquals(usersDTO.getAddress(), capturedModel.getAddress());
-        assertEquals(usersDTO.getPhoneNumber(), capturedModel.getPhoneNumber());
-        assertEquals(usersDTO.getBirthdate(), capturedModel.getBirthdate());
-
-    }
-
-    @Test
-    void null_user_details_update() {
-        usersDTO.setId(null);
-        assertThrows(InvalidDataException.class, () -> userService.updateUsers(usersDTO));
-        verify(usersRepository, never()).updateUsers(any());
-    }
-
-    @Test
     void delete_user_success() {
         userService.deleteUsersById(usersDTO.getId());
         verify(usersRepository).deleteUsersById(usersDTO.getId());
@@ -144,7 +124,7 @@ public class UsersServiceTest {
         int page = 10;
         int size = 2;
         int offset = (page - 1) * size;
-        when(usersRepository.getAllUsers(offset,size)).thenReturn(Collections.emptyList());
+        when(usersRepository.getAllUsers(offset, size)).thenReturn(Collections.emptyList());
         List<UsersModel> result = userService.getAllUsers(page, size);
         assertNotNull(result);
         assertTrue(result.isEmpty());

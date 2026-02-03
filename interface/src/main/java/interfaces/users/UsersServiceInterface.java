@@ -1,6 +1,7 @@
 package interfaces.users;
 
 import DTO.UsersDTO;
+import DTO.UsersPatchDTO;
 import models.UsersModel;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public interface UsersServiceInterface {
 
     UsersModel getUsersById(Long id);
 
-    void updateUsers(UsersDTO dto);
+    void updateUsers(Long id, UsersPatchDTO dto);
 
     void deleteUsersById(Long id);
 
@@ -19,7 +20,4 @@ public interface UsersServiceInterface {
 
     List<UsersModel> getAllUsers(int page, int size);
 
-//    List<UsersModel> searchUserByName(String keyword);
-//
-//    void indexExistingUser();
 }

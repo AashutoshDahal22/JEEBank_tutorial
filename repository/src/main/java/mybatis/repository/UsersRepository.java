@@ -32,10 +32,10 @@ public class UsersRepository implements UsersRepositoryInterface {
         return usersMapper.findUsersByEmail(email);
     }
 
-    @Override
-    public void updateUsers(UsersModel usersModel) {
-        usersMapper.updateUsers(usersModel);
-    }
+//    @Override
+//    public void updateUsers(Long id, UsersModel usersModel) {
+//        usersMapper.updateUsers(id, usersModel);
+//    }
 
     @Override
     public void deleteUsersById(Long id) {

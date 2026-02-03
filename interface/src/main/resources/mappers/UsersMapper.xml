@@ -33,15 +33,18 @@
         where email = #{email}
     </select>
 
-    <update id="updateUsers">
+    <update id="updateUsersDynamic">
         UPDATE userdetails
-        SET name=#{name},
-            email=#{email},
-            phonenumber=#{phoneNumber},
-            address=#{address},
-            birthdate=#{birthdate}::date
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="phoneNumber != null">phonenumber = #{phoneNumber},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="birthdate != null">birthdate = #{birthdate}::date,</if>
+        </set>
         WHERE id = #{id}
     </update>
+
 
     <delete id="deleteUsersById">
         DELETE

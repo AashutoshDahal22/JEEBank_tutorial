@@ -39,10 +39,10 @@ public class UsersRepository implements UsersRepositoryInterface {
         }
     }
 
-    @Override
-    public void updateUsers(UsersModel usersModel) {
-        entityManager.merge(usersModel);
-    }
+//    @Override
+//    public void updateUsers(Long id, UsersModel usersModel) {
+//        entityManager.merge(usersModel);
+//    }
 
     @Override
     public void deleteUsersById(Long id) {

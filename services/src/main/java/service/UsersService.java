@@ -1,6 +1,7 @@
 package service;
 
 import DTO.UsersDTO;
+import DTO.UsersPatchDTO;
 import exception.InvalidDataException;
 import exception.InvalidEmailException;
 import interfaces.users.UsersRepositoryInterface;
@@ -67,22 +68,19 @@ public class UsersService implements UsersServiceInterface {
 
     @Override
     @Transactional
-    public void updateUsers(UsersDTO dto) {
-        if (dto.getId() == null || dto.getId() == -1) {
-            throw new InvalidDataException("Users with null or negative users id cannot be updated");
-        }
-        if (dto.getBirthdate().isAfter(LocalDate.now())) {
+    public void updateUsers(Long id, UsersPatchDTO dto) {
+
+        UsersModel existingUser= this.usersRepository.findUsersById(id);
+
+        if (dto.getBirthdate() != null && dto.getBirthdate().isAfter(LocalDate.now())) {
             throw new InvalidDataException("Future data cannot be entered in birthdate");
         }
-        UsersModel usersModel = UsersModel.builder()
-                .name(dto.getName())
-                .email(dto.getEmail())
-                .address(dto.getAddress())
-                .birthdate(dto.getBirthdate())
-                .phoneNumber(dto.getPhoneNumber())
-                .build();
-//        UsersModel usersModel = ReflectionMapper.map(dto, UsersModel.class);
-        usersRepository.updateUsers(usersModel);
+
+        if (dto.getName() != null) existingUser.setName(dto.getName());
+        if (dto.getEmail() != null) existingUser.setEmail(dto.getEmail());
+        if (dto.getAddress() != null) existingUser.setAddress(dto.getAddress());
+        if (dto.getBirthdate() != null) existingUser.setBirthdate(dto.getBirthdate());
+        if (dto.getPhoneNumber() != null) existingUser.setPhoneNumber(dto.getPhoneNumber());
     }
 
     @Override
