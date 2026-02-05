@@ -6,7 +6,7 @@
 
     <persistence-unit name="JeebankPU" transaction-type="JTA">
         <!-- Use your existing WildFly datasource -->
-        <jta-data-source>java:/PostgresDS</jta-data-source>
+        <jta-data-source>java:jdbc/ApplicationDS</jta-data-source>
 
         <!-- List all your entities here -->
         <class>models.UsersModel</class>
