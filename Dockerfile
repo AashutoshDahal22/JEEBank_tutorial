@@ -1,4 +1,4 @@
-FROM jboss/wildfly:latest
+FROM quay.io/wildfly/wildfly:latest
 
 # Create module directory
 RUN mkdir -p /opt/jboss/wildfly/modules/system/layers/base/org/postgresql/main
@@ -9,6 +9,9 @@ COPY modules/org/postgresql/main/module.xml /opt/jboss/wildfly/modules/system/la
 
 # Copy CLI script
 COPY configure-ds.cli /opt/jboss/wildfly/configure-ds.cli
+
+# Deploy your application WAR
+COPY /web/target/web-1.0-SNAPSHOT.war /opt/jboss/wildfly/standalone/deployments/
 
 # Use CLI in embedded server mode
 RUN /opt/jboss/wildfly/bin/jboss-cli.sh --file=/opt/jboss/wildfly/configure-ds.cli

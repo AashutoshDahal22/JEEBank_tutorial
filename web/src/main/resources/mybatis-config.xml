@@ -12,7 +12,7 @@
             <!--            tells mybatis to not manage transactions and let application server i.e. wildfly manage it-->
             <dataSource type="JNDI">
                 <!--                using jndi means that the db credentials and configurations are not provided here but look up data source in application servers registry-->
-                <property name="data_source" value="java:/PostgresDS"/>
+                <property name="data_source" value="java:/jdbc/ApplicationDS"/>
                 <!--                mybatis will look for jdbc/bankDS in the application server-->
             </dataSource>
         </environment>
