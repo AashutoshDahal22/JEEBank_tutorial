@@ -1,19 +1,8 @@
 services:
-  postgres:
-    image: postgres:17
-    container_name: my-postgres
-    environment:
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: mypassword
-      POSTGRES_DB: mydb
-    ports:
-      - "5433:5432"
-
-  wildfly:
+  app:
     build: .
     container_name: my-wildfly
     ports:
       - "8080:8080"
       - "9990:9990"
-    depends_on:
-      - postgres
+      - "5433:5432"
