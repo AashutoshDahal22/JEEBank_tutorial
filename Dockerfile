@@ -60,8 +60,8 @@ RUN mkdir -p /opt/wildfly/standalone/log \
 # Copy Supervisor config
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-COPY init_db.py /opt/init_db.py
-RUN chmod +x /opt/init_db.py
+COPY init_db.sh /opt/init_db.sh
+RUN chmod +x /opt/init_db.sh
 
 EXPOSE 8080 9990 5432
 
