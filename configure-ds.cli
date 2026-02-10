@@ -4,6 +4,6 @@ module add --name=org.postgresql --resources=/opt/wildfly/modules/system/layers/
 
 /subsystem=datasources/jdbc-driver=postgresql:add(driver-name=postgresql,driver-module-name=org.postgresql,driver-class-name=org.postgresql.Driver)
 
-/subsystem=datasources/data-source=ApplicationDS:add(jndi-name=java:/jdbc/ApplicationDS,driver-name=postgresql,connection-url=jdbc:postgresql://my-postgres:5432/mydb,user-name=myuser,password=mypassword,enabled=true)
+/subsystem=datasources/data-source=ApplicationDS:add(jndi-name=java:/jdbc/ApplicationDS,driver-name=postgresql,connection-url=jdbc:postgresql://localhost:5432/mydb,user-name=myuser,password=mypassword,enabled=true)
 
 stop-embedded-server
